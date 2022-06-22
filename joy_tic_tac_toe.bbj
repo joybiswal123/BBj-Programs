@@ -1,0 +1,447 @@
+declare BBjAPI api!
+declare BBjSysGui sysgui!
+declare BBjTopLevelWindow wnd!
+declare BBjButton btn1!
+declare BBjButton btn2!
+declare BBjButton btn3!
+declare BBjButton btn4!
+declare BBjButton btn5!
+declare BBjButton btn6!
+declare BBjButton btn7!
+declare BBjButton btn8!
+declare BBjButton btn9!
+declare BBjButton btn10!
+
+REM Above we declare button and all
+
+api! = BBjAPI()
+sysgui! = api!.openSysGui("X0")
+ 
+REM Chance set to 2 because every even chance will Player 1 & Every odd chance will Player 2
+chance = 2
+
+REM o determine the position and size of the window.
+wnd! = sysgui!.addWindow(300,300,400,400,"Tic-Tac-Toe")
+wnd!.setBackColor(BBjColor.YELLOW)
+
+
+REM Setting text and buttons and putted color for border of buttons
+REM Set background color for window
+txt1! = wnd!.addStaticText(101, 250,30, 80, 400, "PLAYER 1: X")
+txt1!.setBackColor(BBjColor.YELLOW)
+txt2! = wnd!.addStaticText(102, 250,50, 80, 400, "PLAYER 2: O")
+txt2!.setBackColor(BBjColor.YELLOW)
+txt3! = wnd!.addStaticText(103, 250,80, 80, 400, "PLAYER 1's TURN")
+txt3!.setBackColor(BBjColor.YELLOW)
+txt23! = wnd!.addStaticText(510, 250,120, 100, 500, " ")
+txt23!.setBackColor(BBjColor.YELLOW)
+
+
+REM to add a button and determine its size and position in the window and give it a name.
+btn1! = wnd!.addButton(100,30,10,50,50," ")
+btn1!.setBackColor(BBjColor.BLACK)
+btn2! = wnd!.addButton(200,85,10,50,50," ")
+btn2!.setBackColor(BBjColor.BLACK)
+btn3! = wnd!.addButton(300,140,10,50,50," ")
+btn3!.setBackColor(BBjColor.BLACK)
+
+btn4! = wnd!.addButton(400,30,65,50,50," ")
+btn4!.setBackColor(BBjColor.BLACK)
+btn5! = wnd!.addButton(500,85,65,50,50," ")
+btn5!.setBackColor(BBjColor.BLACK)
+btn6! = wnd!.addButton(600,140,65,50,50," ")
+btn6!.setBackColor(BBjColor.BLACK)
+
+btn7! = wnd!.addButton(700,30,120,50,50," ")
+btn7!.setBackColor(BBjColor.BLACK)
+btn8! = wnd!.addButton(800,85,120,50,50," ")
+btn8!.setBackColor(BBjColor.BLACK)
+btn9! = wnd!.addButton(900,140,120,50,50," ")
+btn9!.setBackColor(BBjColor.BLACK)
+
+btn10! = wnd!.addButton(1000,100,200,150,30,"RETRY")
+btn10!.setBackColor(BBjColor.GREEN)
+
+
+wnd!.setCallback(BBjAPI.ON_CLOSE,"byebye")
+
+REM Creating Events
+btn1!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed1")
+btn1!.setDisableOnClick(1)
+btn2!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed2")
+btn2!.setDisableOnClick(1)
+btn3!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed3")
+btn3!.setDisableOnClick(1)
+btn4!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed4")
+btn4!.setDisableOnClick(1)
+btn5!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed5")
+btn5!.setDisableOnClick(1)
+btn6!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed6")
+btn6!.setDisableOnClick(1)
+btn7!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed7")
+btn7!.setDisableOnClick(1)
+btn8!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed8")
+btn8!.setDisableOnClick(1)
+btn9!.setCallback(BBjAPI.ON_BUTTON_PUSH,"pushed9")
+btn9!.setDisableOnClick(1)
+
+process_events
+
+pushed1:
+	REM MOD() to differenciate even and odd occurances. if mod=0 then its player 1's turn(X). else its player 2's turn(O)
+	a=MOD(chance,2)
+	REM condition to check 'a'=0. 'a' has value of mod 
+	IF a=0 then
+		REM new button which appears over existing button 
+		btn1! = wnd!.addButton(201,30,10,50,50,"X")
+		REM for next player. +1 makes to value odd. so the mod() wont be even hence, next player will get the chanceSS
+		chance=chance+1
+		REM p=2 means player 2 and p = 1 means player 1
+		p=2
+		REM this prints whose chance it is next
+		txt4! = wnd!.addStaticText(404, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt4!.setBackColor(BBjColor.YELLOW)
+		REM to get text from the button to check the results
+		b1$ = btn1!.getText()
+		
+		REM condition to check the pattern. if the pattern matches it will print "Player 1 is winner" which is btn1=btn2=btn3 in this case
+		IF b1$ = b2$ AND b1$ = b3$ AND b2$ = b3$ then
+			mb = msgbox("Player 1 is Winner :)")
+			txt23! = wnd!.addStaticText(501, 250,120, 100, 500, "PLAYER 1 is Winner :)")
+		endif
+		IF b1$ = b4$ AND b1$ = b7$ AND b4$ = b7$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b1$ = b5$ AND b1$ = b9$ AND b5$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn1! = wnd!.addButton(301,30,10,50,50,"O")
+		chance=chance+1
+		p=1
+		txt5! = wnd!.addStaticText(405, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN)
+		txt5!.setBackColor(BBjColor.YELLOW)
+		b1$ = btn1!.getText()
+		
+		IF b1$ = b2$ AND b1$ = b3$ AND b2$ = b3$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b1$ = b4$ AND b1$ = b7$ AND b4$ = b7$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b1$ = b5$ AND b1$ = b9$ AND b5$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		
+	endif
+return
+	
+pushed2:                                                      
+	a=MOD(chance,2)
+	IF a=0 then
+		btn2! = wnd!.addButton(202,85,10,50,50,"X")
+		chance=chance+1
+		p=2
+		txt6! = wnd!.addStaticText(406, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt6!.setBackColor(BBjColor.YELLOW)
+		b2$ = btn2!.getText()
+		
+		IF b2$ = b1$ AND b2$ = b3$ AND b1$ = b3$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b2$ = b5$ AND b2$ = b8$ AND b5$ = b8$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	else
+		btn2! = wnd!.addButton(302,85,10,50,50,"O")
+		chance=chance+1
+		p=1
+		txt7! = wnd!.addStaticText(407, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt7!.setBackColor(BBjColor.YELLOW)
+		b2$ = btn2!.getText()
+		
+		IF b2$ = b1$ AND b2$ = b3$ AND b1$ = b3$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b2$ = b5$ AND b2$ = b8$ AND b5$ = b8$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif	
+return
+	
+pushed3:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn3! = wnd!.addButton(203,140,10,50,50,"X")
+		chance=chance+1
+		p=2
+		txt8! = wnd!.addStaticText(408, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt8!.setBackColor(BBjColor.YELLOW)
+		b3$ = btn3!.getText()
+		
+		IF b3$ = b2$ AND b3$ = b1$ AND b2$ = b1$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b3$ = b6$ AND b3$ = b9$ AND b6$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b3$ = b5$ AND b3$ = b7$ AND b5$ = b7$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	else
+	
+		btn3! = wnd!.addButton(303,140,10,50,50,"O")
+		chance=chance+1
+		p=1
+		txt9! = wnd!.addStaticText(409, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt9!.setBackColor(BBjColor.YELLOW)
+		b3$ = btn3!.getText()
+		
+		IF b3$ = b2$ AND b3$ = b1$ AND b2$ = b1$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b3$ = b6$ AND b3$ = b9$ AND b6$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b3$ = b5$ AND b3$ = b7$ AND b5$ = b7$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif
+return
+	
+REM ------------------------------------------------------------
+	
+pushed4:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn4! = wnd!.addButton(204,30,65,50,50,"X")
+		chance=chance+1                                                 
+		p=2
+		txt10! = wnd!.addStaticText(410, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt10!.setBackColor(BBjColor.YELLOW)
+		b4$ = btn4!.getText()
+		
+		IF b4$ = b7$ AND b4$ = b1$ AND b7$ = b1$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b4$ = b5$ AND b4$ = b6$ AND b5$ = b6$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn4! = wnd!.addButton(304,30,65,50,50,"O")
+		chance=chance+1
+		p=1
+		txt11! = wnd!.addStaticText(411, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt11!.setBackColor(BBjColor.YELLOW)
+		b4$ = btn4!.getText()
+		
+		IF b4$ = b7$ AND b4$ = b1$ AND b7$ = b1$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b4$ = b5$ AND b4$ = b6$ AND b5$ = b6$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif
+return
+	
+pushed5:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn5! = wnd!.addButton(205,85,65,50,50,"X")
+		chance=chance+1
+		p=2
+		txt12! = wnd!.addStaticText(412, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt12!.setBackColor(BBjColor.YELLOW)
+		b5$ = btn5!.getText()
+		
+		IF b5$ = b2$ AND b5$ = b8$ AND b2$ = b8$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b5$ = b4$ AND b5$ = b6$ AND b4$ = b6$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b5$ = b1$ AND b5$ = b9$ AND b1$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b5$ = b7$ AND b5$ = b3$ AND b3$ = b7$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn5! = wnd!.addButton(305,85,65,50,50,"O")
+		chance=chance+1
+		p=1
+		txt13! = wnd!.addStaticText(413, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt13!.setBackColor(BBjColor.YELLOW)
+		b5$ = btn5!.getText()
+		
+		IF b5$ = b2$ AND b5$ = b8$ AND b2$ = b8$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b5$ = b4$ AND b5$ = b6$ AND b4$ = b6$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b5$ = b1$ AND b5$ = b9$ AND b1$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b5$ = b7$ AND b5$ = b3$ AND b3$ = b7$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif
+return
+	
+pushed6:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn6! = wnd!.addButton(206,140,65,50,50,"X")
+		chance=chance+1
+		p=2
+		txt14! = wnd!.addStaticText(414, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt14!.setBackColor(BBjColor.YELLOW)
+		b6$ = btn6!.getText()
+		
+		IF b6$ = b3$ AND b6$ = b9$ AND b3$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b6$ = b5$ AND b6$ = b4$ AND b4$ = b5$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn6! = wnd!.addButton(306,140,65,50,50,"O")
+		chance=chance+1
+		p=1
+		txt15! = wnd!.addStaticText(415, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt15!.setBackColor(BBjColor.YELLOW)
+		b6$ = btn6!.getText()
+		
+		IF b6$ = b3$ AND b6$ = b9$ AND b3$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)"))
+		endif
+		IF b6$ = b5$ AND b6$ = b4$ AND b4$ = b5$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif
+return
+	
+REM -----------------------------------------------------------------------
+	
+pushed7:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn7! = wnd!.addButton(207,30,120,50,50,"X")
+		chance=chance+1
+		p=2
+		txt16! = wnd!.addStaticText(416, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt16!.setBackColor(BBjColor.YELLOW)
+		b7$ = btn7!.getText()
+		
+		IF b7$ = b4$ AND b7$ = b1$ AND b1$ = b4$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b7$ = b8$ AND b7$ = b9$ AND b8$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b7$ = b5$ AND b7$ = b3$ AND b3$ = b7$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn7! = wnd!.addButton(307,30,120,50,50,"O")
+		chance=chance+1
+		p=1
+		txt17! = wnd!.addStaticText(417, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt17!.setBackColor(BBjColor.YELLOW)
+		b7$ = btn7!.getText()
+		
+		IF b7$ = b4$ AND b7$ = b1$ AND b1$ = b4$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b7$ = b8$ AND b7$ = b9$ AND b8$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b7$ = b5$ AND b7$ = b3$ AND b3$ = b7$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif	
+return
+	
+pushed8:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn8! = wnd!.addButton(208,85,120,50,50,"X")
+		chance=chance+1
+		p=2
+		txt18! = wnd!.addStaticText(418, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt18!.setBackColor(BBjColor.YELLOW)
+		b8$ = btn8!.getText()
+		
+		IF b8$ = b5$ AND b8$ = b2$ AND b2$ = b5$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b8$ = b7$ AND b8$ = b9$ AND b7$ = b9$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+	
+	else
+		btn8! = wnd!.addButton(308,85,120,50,50,"O")
+		chance=chance+1
+		p=1
+		txt19! = wnd!.addStaticText(419, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt19!.setBackColor(BBjColor.YELLOW)
+		b8$ = btn8!.getText()
+		
+		IF b8$ = b5$ AND b8$ = b2$ AND b2$ = b5$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b8$ = b7$ AND b8$ = b9$ AND b7$ = b9$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif	
+return
+	
+pushed9:
+	a=MOD(chance,2)
+	IF a=0 then
+		btn9! = wnd!.addButton(209,140,120,50,50,"X")
+		chance=chance+1
+		p=2
+		txt20! = wnd!.addStaticText(420, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt20!.setBackColor(BBjColor.YELLOW)
+		b9$ = btn9!.getText()
+		
+		IF b9$ = b8$ AND b9$ = b7$ AND b7$ = b8$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b9$ = b6$ AND b9$ = b3$ AND b3$ = b6$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif
+		IF b9$ = b5$ AND b9$ = b1$ AND b1$ = b5$ then
+			mb = msgbox("Player 1 is Winner :)")
+		endif                                                   
+	else
+
+		btn9! = wnd!.addButton(309,140,120,50,50,"O")
+		chance=chance+1
+		p=1
+		txt21! = wnd!.addStaticText(421, 250,80, 70, 500, "PLAYER "+ str(p)+ "'s TURN")
+		txt21!.setBackColor(BBjColor.YELLOW)
+		b9$ = btn9!.getText()
+		
+		IF b9$ = b8$ AND b9$ = b7$ AND b7$ = b8$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b9$ = b6$ AND b9$ = b3$ AND b3$ = b6$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+		IF b9$ = b5$ AND b9$ = b1$ AND b1$ = b5$ then
+			mb = msgbox("Player 2 is Winner :)")
+		endif
+	endif
+return
+	
+byebye:
+release
+
