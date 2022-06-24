@@ -13,7 +13,6 @@ declare BBjButton btn6!
 declare BBjButton btn7!
 declare BBjButton btn8!
 declare BBjButton btn9!
-declare BBjButton btn10!
 
 REM Above we declare button and all
 
@@ -61,10 +60,6 @@ btn8! = wnd!.addButton(800,85,120,50,50," ")
 btn8!.setBackColor(BBjColor.BLACK)
 btn9! = wnd!.addButton(900,140,120,50,50," ")
 btn9!.setBackColor(BBjColor.BLACK)
-
-btn10! = wnd!.addButton(1000,100,200,150,30,"RETRY")
-btn10!.setBackColor(BBjColor.GREEN)
-
 
 wnd!.setCallback(BBjAPI.ON_CLOSE,"byebye")
 
